@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 import os, argparse
-from scipy import misc
+import imageio
 from lib.PraNet_Res2Net import PraNet
 from utils.dataloader import test_dataset
 
@@ -36,4 +36,4 @@ for i in range(test_loader.size):
     res = F.upsample(res, size=gt.shape, mode='bilinear', align_corners=False)
     res = res.sigmoid().data.cpu().numpy().squeeze()
     res = (res - res.min()) / (res.max() - res.min() + 1e-8)
-    misc.imsave(save_path+name, res)
+    imageio.imwrite(save_path+name, res)
